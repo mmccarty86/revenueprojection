@@ -1,0 +1,69 @@
+import React, { useState } from 'react';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+
+const RevenueProjectionsCalculator = () => {
+  const [revenueGoal, setRevenueGoal] = useState(100000);
+  const [averageClientValue, setAverageClientValue] = useState(1000);
+  const [conversionRate, setConversionRate] = useState(20);
+  const [leadGenerationRate, setLeadGenerationRate] = useState(50);
+
+  const clientsNeeded = Math.ceil(revenueGoal / averageClientValue);
+  const salesCallsNeeded = Math.ceil(clientsNeeded / (conversionRate / 100));
+  const leadsNeeded = Math.ceil(salesCallsNeeded / (leadGenerationRate / 100));
+
+  return (
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader className="text-2xl font-bold">Revenue Projections Calculator</CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="revenueGoal">Annual Revenue Goal ($)</Label>
+            <Input
+              id="revenueGoal"
+              type="number"
+              value={revenueGoal}
+              onChange={(e) => setRevenueGoal(Number(e.target.value))}
+            />
+          </div>
+          <div>
+            <Label htmlFor="averageClientValue">Average Client Value ($)</Label>
+            <Input
+              id="averageClientValue"
+              type="number"
+              value={averageClientValue}
+              onChange={(e) => setAverageClientValue(Number(e.target.value))}
+            />
+          </div>
+          <div>
+            <Label htmlFor="conversionRate">Sales Call Conversion Rate (%)</Label>
+            <Input
+              id="conversionRate"
+              type="number"
+              value={conversionRate}
+              onChange={(e) => setConversionRate(Number(e.target.value))}
+            />
+          </div>
+          <div>
+            <Label htmlFor="leadGenerationRate">Lead to Sales Call Rate (%)</Label>
+            <Input
+              id="leadGenerationRate"
+              type="number"
+              value={leadGenerationRate}
+              onChange={(e) => setLeadGenerationRate(Number(e.target.value))}
+            />
+          </div>
+
+          <div className="mt-6 space-y-2">
+            <p><strong>Clients Needed:</strong> {clientsNeeded}</p>
+            <p><strong>Sales Calls Needed:</strong> {salesCallsNeeded}</p>
+            <p><strong>Leads Needed:</strong> {leadsNeeded}</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default RevenueProjectionsCalculator;
